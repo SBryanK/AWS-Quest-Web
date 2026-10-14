@@ -10,4 +10,4 @@ Next actions:
 2. Implement a focused improvement using relevant source files; preserve study progress.
 3. Update state with changes and actual test results.
 
-GitHub is independent of existing ChatGPT Site hosting; no automatic deployment is configured. Original deck and user notes are not included.
+GitHub Pages now deploys automatically from main through .github/workflows/static.yml. On 2026-10-14 its upload path was corrected from repository root to ./dist so dist/index.html becomes the published entry point. Deployment status must be checked in Actions. The existing ChatGPT Site remains independent. Original deck and user notes are not included.
