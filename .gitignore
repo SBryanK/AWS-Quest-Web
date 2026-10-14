@@ -1,0 +1,16 @@
+.sites-runtime/
+.sites-source/
+__pycache__/
+*.pyc
+*.tar.gz
+*.tgz
+
+.private-study-source/
+
+.env
+.env.*
+!.env.example
+.DS_Store
+node_modules/
+.claude/settings.local.json
+*.log

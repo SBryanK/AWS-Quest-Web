@@ -1,0 +1,4 @@
+interface:
+  display_name: "Project Context Setup"
+  short_description: "Set up projects and resume with focused context"
+  default_prompt: "Use $setup-project-context to index this project, organize its goals and prepare a compact continuation."

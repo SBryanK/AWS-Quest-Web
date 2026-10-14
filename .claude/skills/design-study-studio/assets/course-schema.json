@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "title": "Example course",
+  "sources": [
+    {
+      "id": "s1",
+      "title": "Example source",
+      "pageCount": 1
+    }
+  ],
+  "coverage": [
+    {
+      "source": "s1",
+      "start": 1,
+      "end": 1,
+      "status": "explained",
+      "lessonIds": [
+        "l1"
+      ],
+      "note": ""
+    }
+  ],
+  "lessons": [
+    {
+      "id": "l1",
+      "title": "A concept",
+      "mentalModel": "Plain-language model",
+      "mechanism": [
+        "Mechanism step"
+      ],
+      "example": "Worked example",
+      "decision": "Decisive condition",
+      "misconception": "Common confusion",
+      "retrieval": {
+        "prompt": "Explain why",
+        "answer": "Reasoning"
+      },
+      "sources": [
+        {
+          "source": "s1",
+          "start": 1,
+          "end": 1
+        }
+      ]
+    }
+  ],
+  "concepts": [
+    {
+      "id": "c1",
+      "name": "Concept",
+      "category": "Category",
+      "cue": "Memory hook",
+      "chooseWhen": "Use case",
+      "confusion": "Closest alternative",
+      "lessonIds": [
+        "l1"
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "Example",
+      "options": [
+        "A",
+        "B"
+      ],
+      "correct": [
+        0
+      ],
+      "rationales": [
+        "Why A",
+        "Why not B"
+      ],
+      "lessonIds": [
+        "l1"
+      ]
+    }
+  ]
+}

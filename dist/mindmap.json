@@ -1,0 +1,1947 @@
+{
+  "title": "AWS Service Memory Map",
+  "updated": "2026-10-11",
+  "scope": "Services and major features taught in the 101-lesson course. Grouping is for memorization, not an AWS architecture or an exhaustive catalog of every AWS product.",
+  "categories": [
+    {
+      "id": "identity",
+      "title": "Identity & governance",
+      "question": "Siapa boleh melakukan apa?",
+      "memory": "IAM = izin · STS = izin sementara · Identity Center = login karyawan · Cognito = login pelanggan.",
+      "color": "#2878a0",
+      "source": "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/security-services.html",
+      "services": [
+        {
+          "id": "iam",
+          "name": "IAM",
+          "cue": "Permission book · buku izin",
+          "use": "Atur siapa boleh melakukan action pada resource, dengan conditions.",
+          "compare": "Identity policy grants; boundary dan SCP membatasi. Explicit deny yang berlaku menang.",
+          "lesson": "l002",
+          "group": "Identity & access",
+          "expansion": "Identity and Access Management"
+        },
+        {
+          "id": "sts",
+          "name": "STS",
+          "cue": "Temporary badge · kartu sementara",
+          "use": "Dapatkan temporary AWS credentials melalui role assumption atau federation.",
+          "compare": "STS menerbitkan session credentials; IAM mendefinisikan izin dan trust.",
+          "lesson": "l004",
+          "group": "Identity & access",
+          "expansion": "Security Token Service"
+        },
+        {
+          "id": "iam-identity-center",
+          "name": "IAM Identity Center",
+          "cue": "Staff entrance · pintu karyawan",
+          "use": "Satu akses workforce ke banyak AWS accounts dan business apps.",
+          "compare": "Untuk workforce; Cognito ditujukan bagi identitas pengguna aplikasi.",
+          "lesson": "l009",
+          "group": "Identity & access",
+          "expansion": ""
+        },
+        {
+          "id": "cognito-user-pools",
+          "name": "Cognito user pools",
+          "cue": "App login · direktori pelanggan",
+          "use": "Sign-up, sign-in dan tokens untuk pengguna aplikasi.",
+          "compare": "User pool menghasilkan tokens; identity pool memberi temporary AWS credentials.",
+          "lesson": "l005",
+          "group": "Identity & access",
+          "expansion": ""
+        },
+        {
+          "id": "cognito-identity-pools",
+          "name": "Cognito identity pools",
+          "cue": "Token → AWS credentials",
+          "use": "Tukar identitas yang dipercaya menjadi credentials AWS dengan izin role.",
+          "compare": "Bukan pengganti direktori user pool; kedua komponen dapat dipakai bersama.",
+          "lesson": "l005",
+          "group": "Identity & access",
+          "expansion": ""
+        },
+        {
+          "id": "organizations",
+          "name": "Organizations",
+          "cue": "Account family · keluarga akun",
+          "use": "Kelompokkan accounts dalam OUs, consolidated billing dan organization policies.",
+          "compare": "Billing gabungan tidak menyatukan resource atau otomatis memberi akses antar-account.",
+          "lesson": "l007",
+          "group": "Govern accounts",
+          "expansion": ""
+        },
+        {
+          "id": "scps",
+          "name": "SCPs",
+          "cue": "Permission ceiling · pagar organisasi",
+          "use": "Batasi maximum permissions bagi principal member accounts yang tercakup.",
+          "compare": "SCP tidak memberi izin. Pengecualian scope, termasuk management account, perlu dipahami.",
+          "lesson": "l008",
+          "group": "Govern accounts",
+          "expansion": ""
+        },
+        {
+          "id": "control-tower",
+          "name": "Control Tower",
+          "cue": "Landing zone · standar awal",
+          "use": "Siapkan dan govern multi-account environment dengan controls dan Account Factory.",
+          "compare": "Control Tower memakai layanan seperti Organizations; bukan pengganti seluruh policy design.",
+          "lesson": "l010",
+          "group": "Govern accounts",
+          "expansion": ""
+        },
+        {
+          "id": "resource-access-manager-ram",
+          "name": "Resource Access Manager (RAM)",
+          "cue": "Share resources · berbagi infrastruktur",
+          "use": "Bagikan supported resources, misalnya subnets, ke accounts lain.",
+          "compare": "Resource sharing bukan berarti berbagi semua isi account atau menyalin resource.",
+          "lesson": "l011",
+          "group": "Govern accounts",
+          "expansion": ""
+        },
+        {
+          "id": "aws-managed-microsoft-ad",
+          "name": "AWS Managed Microsoft AD",
+          "cue": "Managed real AD · domain dikelola",
+          "use": "Butuh Microsoft Active Directory dan integrasi atau trust yang didukung.",
+          "compare": "AWS mengelola domain controllers; AD Connector hanya proxy ke AD yang sudah ada.",
+          "lesson": "l006",
+          "group": "Directory Service",
+          "expansion": ""
+        },
+        {
+          "id": "ad-connector",
+          "name": "AD Connector",
+          "cue": "Directory proxy · jembatan AD",
+          "use": "Teruskan directory requests ke on-premises Microsoft AD.",
+          "compare": "Tidak menyimpan direktori mandiri; membutuhkan konektivitas ke AD asal.",
+          "lesson": "l006",
+          "group": "Directory Service",
+          "expansion": ""
+        },
+        {
+          "id": "simple-ad",
+          "name": "Simple AD",
+          "cue": "Basic directory · kebutuhan dasar",
+          "use": "Butuh directory berbasis Samba dengan subset fitur kompatibel AD.",
+          "compare": "Bukan full Microsoft AD; jangan pilih bila membutuhkan fitur atau trust yang tidak didukung.",
+          "lesson": "l006",
+          "group": "Directory Service",
+          "expansion": ""
+        }
+      ]
+    },
+    {
+      "id": "security",
+      "title": "Security & encryption",
+      "question": "Bagaimana melindungi dan menemukan ancaman?",
+      "memory": "WAF = request web · Shield = DDoS · Inspector = celah · GuardDuty = ancaman · Macie = data sensitif.",
+      "color": "#ae4b40",
+      "source": "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/security-services.html",
+      "services": [
+        {
+          "id": "kms",
+          "name": "KMS",
+          "cue": "Key manager · pengelola kunci",
+          "use": "Kelola encryption keys, access policies dan integrasi enkripsi AWS.",
+          "compare": "KMS biasanya melindungi data key dalam envelope encryption; bukan tempat menyimpan password aplikasi.",
+          "lesson": "l013",
+          "group": "Encrypt & protect secrets",
+          "expansion": "Key Management Service"
+        },
+        {
+          "id": "cloudhsm",
+          "name": "CloudHSM",
+          "cue": "Dedicated vault · HSM khusus",
+          "use": "Butuh kontrol cryptographic users dan keys pada dedicated HSM cluster.",
+          "compare": "Lebih banyak kontrol dan tanggung jawab operasional daripada KMS.",
+          "lesson": "l016",
+          "group": "Encrypt & protect secrets",
+          "expansion": "Managed dedicated HSM service"
+        },
+        {
+          "id": "secrets-manager",
+          "name": "Secrets Manager",
+          "cue": "Rotate secrets · putar rahasia",
+          "use": "Simpan secrets dan otomatiskan rotation untuk integrasi yang sesuai.",
+          "compare": "Parameter Store cocok untuk konfigurasi; rotation Secrets Manager tetap perlu setup dan dukungan target.",
+          "lesson": "l014",
+          "group": "Encrypt & protect secrets",
+          "expansion": ""
+        },
+        {
+          "id": "ssm-parameter-store",
+          "name": "SSM Parameter Store",
+          "cue": "Config shelf · rak konfigurasi",
+          "use": "Simpan parameter hierarkis, termasuk SecureString dengan KMS.",
+          "compare": "Bukan layanan rotation database credential yang setara Secrets Manager.",
+          "lesson": "l014",
+          "group": "Encrypt & protect secrets",
+          "expansion": ""
+        },
+        {
+          "id": "certificate-manager-acm",
+          "name": "Certificate Manager (ACM)",
+          "cue": "TLS certificates · identitas endpoint",
+          "use": "Provision dan manage certificates untuk integrations dan exportable use cases yang didukung.",
+          "compare": "Certificate untuk TLS berbeda dari KMS data encryption key. Exported renewals perlu didistribusikan.",
+          "lesson": "l015",
+          "group": "Encrypt & protect secrets",
+          "expansion": ""
+        },
+        {
+          "id": "waf",
+          "name": "WAF",
+          "cue": "Web request filter · saringan HTTP",
+          "use": "Filter HTTP(S) requests berdasarkan rules, IP, rate dan attack patterns.",
+          "compare": "Layer aplikasi; security groups memfilter koneksi jaringan, bukan SQL injection di request.",
+          "lesson": "l019",
+          "group": "Prevent & inspect",
+          "expansion": "Web Application Firewall"
+        },
+        {
+          "id": "shield",
+          "name": "Shield",
+          "cue": "DDoS shield · tahan banjir",
+          "use": "Lindungi availability dari DDoS; bedakan Standard dan Advanced.",
+          "compare": "Bukan pengganti WAF rules atau capacity/resilience design.",
+          "lesson": "l019",
+          "group": "Prevent & inspect",
+          "expansion": "AWS DDoS protection"
+        },
+        {
+          "id": "firewall-manager",
+          "name": "Firewall Manager",
+          "cue": "Policy across accounts",
+          "use": "Kelola supported security policies secara terpusat lintas organization.",
+          "compare": "Pengelola kebijakan, bukan firewall inline yang memeriksa semua packet sendiri.",
+          "lesson": "l019",
+          "group": "Prevent & inspect",
+          "expansion": ""
+        },
+        {
+          "id": "network-firewall",
+          "name": "Network Firewall",
+          "cue": "VPC inspection · pemeriksaan trafik",
+          "use": "Stateful/stateless inspection traffic VPC melalui firewall endpoints.",
+          "compare": "Route traffic melalui endpoint; membuat firewall saja tidak mengubah route otomatis.",
+          "lesson": "l089",
+          "group": "Prevent & inspect",
+          "expansion": ""
+        },
+        {
+          "id": "inspector",
+          "name": "Inspector",
+          "cue": "Find vulnerabilities · cari celah",
+          "use": "Assess vulnerabilities pada supported workloads dan images.",
+          "compare": "Celah software berbeda dari suspicious behavior yang dicari GuardDuty.",
+          "lesson": "l020",
+          "group": "Detect & investigate",
+          "expansion": "Workload vulnerability assessment"
+        },
+        {
+          "id": "guardduty",
+          "name": "GuardDuty",
+          "cue": "Threat detector · cari perilaku aneh",
+          "use": "Deteksi potensi ancaman dari sumber telemetry dan protections yang didukung.",
+          "compare": "Findings butuh investigation/response; tidak otomatis memblokir semua ancaman.",
+          "lesson": "l020",
+          "group": "Detect & investigate",
+          "expansion": "Threat detection"
+        },
+        {
+          "id": "macie",
+          "name": "Macie",
+          "cue": "Sensitive data · isi S3",
+          "use": "Temukan data sensitif dalam supported S3 objects, seperti informasi pribadi.",
+          "compare": "Menemukan PII tidak otomatis menghapus atau meredaksinya.",
+          "lesson": "l096",
+          "group": "Detect & investigate",
+          "expansion": ""
+        },
+        {
+          "id": "security-hub",
+          "name": "Security Hub",
+          "cue": "Findings hub · kumpulkan temuan",
+          "use": "Centralize dan prioritize security findings serta posture checks.",
+          "compare": "CloudTrail mencatat activity; Security Hub merangkum findings dari berbagai sumber.",
+          "lesson": "l021",
+          "group": "Detect & investigate",
+          "expansion": "Security findings aggregation"
+        },
+        {
+          "id": "detective",
+          "name": "Detective",
+          "cue": "Investigation graph · hubungkan bukti",
+          "use": "Telusuri relationships dan konteks activity untuk investigasi security.",
+          "compare": "Memperdalam penyebab; bukan pengganti GuardDuty threat detection.",
+          "lesson": "l021",
+          "group": "Detect & investigate",
+          "expansion": "Security investigation context"
+        }
+      ]
+    },
+    {
+      "id": "compute",
+      "title": "Compute & containers",
+      "question": "Di mana kode berjalan?",
+      "memory": "EC2 = mesin · ECS/EKS = pengatur · Fargate = kapasitas container · ECR = gudang image · Lambda = function.",
+      "color": "#9b6518",
+      "source": "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/compute-services.html",
+      "services": [
+        {
+          "id": "ec2",
+          "name": "EC2",
+          "cue": "Virtual machine · mesin virtual",
+          "use": "Butuh kontrol OS, instance type, networking dan software server.",
+          "compare": "Kontrol lebih besar berarti patching dan pengelolaan guest OS menjadi tanggung jawabmu.",
+          "lesson": "l022",
+          "group": "Run code",
+          "expansion": "Elastic Compute Cloud"
+        },
+        {
+          "id": "ec2-auto-scaling",
+          "name": "EC2 Auto Scaling",
+          "cue": "Fleet size · jumlah mesin",
+          "use": "Maintain desired capacity dan sesuaikan jumlah instances dengan demand.",
+          "compare": "ASG menambah kapasitas; load balancer membagi traffic.",
+          "lesson": "l023",
+          "group": "Run code",
+          "expansion": ""
+        },
+        {
+          "id": "lambda",
+          "name": "Lambda",
+          "cue": "Event → function",
+          "use": "Jalankan code on demand dari request atau event tanpa mengelola server.",
+          "compare": "Perhatikan invocation model, duration, concurrency dan idempotency; bukan server panjang tanpa batas.",
+          "lesson": "l027",
+          "group": "Run code",
+          "expansion": "Event-driven function compute"
+        },
+        {
+          "id": "aws-batch",
+          "name": "AWS Batch",
+          "cue": "Queue → finite jobs",
+          "use": "Jadwalkan batch jobs dan provision compute sesuai kebutuhan job.",
+          "compare": "Batch menjadwalkan pekerjaan; Step Functions mengorkestrasi alur beberapa langkah.",
+          "lesson": "l057",
+          "group": "Run code",
+          "expansion": ""
+        },
+        {
+          "id": "elastic-beanstalk",
+          "name": "Elastic Beanstalk",
+          "cue": "Deploy app · platform aplikasi",
+          "use": "Deploy web application pada supported platform dengan environment management.",
+          "compare": "Resource seperti EC2/ALB tetap ada dan dapat memerlukan konfigurasi; bukan Lambda.",
+          "lesson": "l066",
+          "group": "Run code",
+          "expansion": ""
+        },
+        {
+          "id": "ecs",
+          "name": "ECS",
+          "cue": "AWS container scheduler",
+          "use": "Kelola container tasks dan services menggunakan orkestrasi AWS.",
+          "compare": "ECS adalah orchestrator; Fargate atau EC2 menyediakan compute.",
+          "lesson": "l025",
+          "group": "Containers",
+          "expansion": "Elastic Container Service"
+        },
+        {
+          "id": "eks",
+          "name": "EKS",
+          "cue": "Managed Kubernetes",
+          "use": "Butuh Kubernetes API dan ecosystem dengan managed control plane.",
+          "compare": "Managed control plane tidak berarti semua node dan add-ons bebas operasi.",
+          "lesson": "l026",
+          "group": "Containers",
+          "expansion": "Elastic Kubernetes Service"
+        },
+        {
+          "id": "fargate",
+          "name": "Fargate",
+          "cue": "Containers without hosts",
+          "use": "Jalankan supported ECS tasks atau EKS pods tanpa mengelola EC2 hosts.",
+          "compare": "Fargate bukan image registry dan bukan orchestrator terpisah.",
+          "lesson": "l025",
+          "group": "Containers",
+          "expansion": "Managed container compute"
+        },
+        {
+          "id": "ecr",
+          "name": "ECR",
+          "cue": "Image registry · gudang image",
+          "use": "Simpan, version dan distribusikan container images.",
+          "compare": "ECR menyimpan image; ECS/EKS menjalankan container dari image.",
+          "lesson": "l025",
+          "group": "Containers",
+          "expansion": "Elastic Container Registry"
+        },
+        {
+          "id": "ecs-anywhere",
+          "name": "ECS Anywhere",
+          "cue": "ECS on your servers",
+          "use": "Kelola containers pada supported external infrastructure dengan ECS.",
+          "compare": "Host tetap milik dan dikelola customer; bukan Fargate di on-premises.",
+          "lesson": "l026",
+          "group": "Containers",
+          "expansion": ""
+        },
+        {
+          "id": "eks-anywhere",
+          "name": "EKS Anywhere",
+          "cue": "Kubernetes on your infrastructure",
+          "use": "Buat dan operasikan Kubernetes di infrastructure sendiri dengan tooling EKS Anywhere.",
+          "compare": "Berbeda dari EKS regional control plane; pahami responsibility model.",
+          "lesson": "l026",
+          "group": "Containers",
+          "expansion": ""
+        },
+        {
+          "id": "outposts",
+          "name": "Outposts",
+          "cue": "AWS at your site",
+          "use": "Butuh supported AWS infrastructure/services secara on-premises.",
+          "compare": "Bukan sekadar VPN ke Region; ada hardware, capacity dan connectivity planning.",
+          "lesson": "l035",
+          "group": "Hybrid & edge",
+          "expansion": "AWS infrastructure on customer premises"
+        },
+        {
+          "id": "local-zones",
+          "name": "Local Zones",
+          "cue": "AWS near a city",
+          "use": "Tempatkan supported workloads lebih dekat ke pengguna metro-area.",
+          "compare": "Bukan CloudFront cache; ini kapasitas infrastructure yang terhubung ke parent Region.",
+          "lesson": "l035",
+          "group": "Hybrid & edge",
+          "expansion": ""
+        },
+        {
+          "id": "wavelength",
+          "name": "Wavelength",
+          "cue": "Telecom edge · dekat jaringan seluler",
+          "use": "Low-latency supported workloads dekat telecom network edge.",
+          "compare": "Cek lokasi dan operator; bukan layanan yang tersedia di semua AZ.",
+          "lesson": "l035",
+          "group": "Hybrid & edge",
+          "expansion": "AWS infrastructure at telecom edge"
+        }
+      ]
+    },
+    {
+      "id": "network",
+      "title": "Network & delivery",
+      "question": "Bagaimana request mencapai tujuan?",
+      "memory": "Route 53 = nama · ALB/NLB = bagi traffic · CloudFront = cache edge · Global Accelerator = jalur global.",
+      "color": "#3068ab",
+      "source": "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/networking-services.html",
+      "services": [
+        {
+          "id": "vpc",
+          "name": "VPC",
+          "cue": "Your network · jaringan virtual",
+          "use": "Rancang subnets, routing dan security boundaries dalam satu Region.",
+          "compare": "Subnet berada pada satu AZ; membuat VPC tidak otomatis menyediakan internet access.",
+          "lesson": "l082",
+          "group": "Network foundation",
+          "expansion": "Virtual Private Cloud"
+        },
+        {
+          "id": "security-groups",
+          "name": "Security groups",
+          "cue": "Stateful allow · pagar resource",
+          "use": "Allow traffic yang diperlukan pada supported resources/interfaces.",
+          "compare": "Return traffic untuk connection yang diizinkan bersifat stateful; tidak ada explicit deny rules.",
+          "lesson": "l083",
+          "group": "Network foundation",
+          "expansion": ""
+        },
+        {
+          "id": "network-acls",
+          "name": "Network ACLs",
+          "cue": "Stateless subnet rules",
+          "use": "Allow/deny traffic di batas subnet dengan numbered rules.",
+          "compare": "Periksa arah request dan return, termasuk ephemeral ports.",
+          "lesson": "l083",
+          "group": "Network foundation",
+          "expansion": ""
+        },
+        {
+          "id": "internet-gateway",
+          "name": "Internet gateway",
+          "cue": "Internet doorway · pintu internet",
+          "use": "Sediakan jalur internet untuk resources dengan addressing dan routing yang sesuai.",
+          "compare": "Private IPv4 instance tanpa public IP tidak mendapat internet hanya dengan IGW route.",
+          "lesson": "l083",
+          "group": "Network foundation",
+          "expansion": ""
+        },
+        {
+          "id": "nat-gateway",
+          "name": "NAT gateway",
+          "cue": "Private IPv4 egress",
+          "use": "Biarkan private IPv4 resources memulai koneksi keluar melalui NAT.",
+          "compare": "Tidak membuka arbitrary inbound connection dari internet ke instance private.",
+          "lesson": "l083",
+          "group": "Network foundation",
+          "expansion": ""
+        },
+        {
+          "id": "vpc-peering",
+          "name": "VPC peering",
+          "cue": "Two-network link",
+          "use": "Hubungkan dua VPC dengan IP ranges yang kompatibel.",
+          "compare": "Tidak transitive; A–B dan B–C tidak otomatis memberi A–C.",
+          "lesson": "l084",
+          "group": "Connect networks",
+          "expansion": ""
+        },
+        {
+          "id": "transit-gateway",
+          "name": "Transit Gateway",
+          "cue": "Routing hub · hub jaringan",
+          "use": "Hub-and-spoke untuk banyak VPC serta hybrid attachments.",
+          "compare": "Route tables dan attachment propagation menentukan konektivitas; bukan otomatis semua saling akses.",
+          "lesson": "l084",
+          "group": "Connect networks",
+          "expansion": ""
+        },
+        {
+          "id": "privatelink",
+          "name": "PrivateLink",
+          "cue": "Private service access",
+          "use": "Expose atau konsumsi supported service melalui private endpoint.",
+          "compare": "Akses service berbeda dari full network connectivity melalui peering/TGW.",
+          "lesson": "l085",
+          "group": "Private service paths",
+          "expansion": "Private endpoint service access"
+        },
+        {
+          "id": "gateway-endpoints",
+          "name": "Gateway endpoints",
+          "cue": "S3/DynamoDB route shortcut",
+          "use": "Akses S3 atau DynamoDB melalui endpoint pada route table yang sesuai.",
+          "compare": "Berbeda dari interface endpoint dengan private ENIs dan security groups.",
+          "lesson": "l085",
+          "group": "Private service paths",
+          "expansion": ""
+        },
+        {
+          "id": "interface-endpoints",
+          "name": "Interface endpoints",
+          "cue": "Service through private ENIs",
+          "use": "Akses supported services melalui private IP endpoint di subnets.",
+          "compare": "Perhatikan DNS, security groups, endpoint policies dan biaya; tidak semua service memakai gateway endpoint.",
+          "lesson": "l085",
+          "group": "Private service paths",
+          "expansion": ""
+        },
+        {
+          "id": "site-to-site-vpn",
+          "name": "Site-to-Site VPN",
+          "cue": "Encrypted network tunnel",
+          "use": "Hubungkan on-premises network dengan AWS melalui IPsec tunnels.",
+          "compare": "VPN memberikan encrypted tunnel; dedicated link adalah peran Direct Connect.",
+          "lesson": "l086",
+          "group": "Hybrid access",
+          "expansion": ""
+        },
+        {
+          "id": "client-vpn",
+          "name": "Client VPN",
+          "cue": "Remote user tunnel",
+          "use": "Akses private resources untuk individual remote users.",
+          "compare": "Bukan koneksi site-wide appliance seperti Site-to-Site VPN.",
+          "lesson": "l086",
+          "group": "Hybrid access",
+          "expansion": ""
+        },
+        {
+          "id": "vpn-cloudhub",
+          "name": "VPN CloudHub",
+          "cue": "VPN hub for branches",
+          "use": "Komunikasi antar supported remote networks melalui hub VPN dan routing yang tepat.",
+          "compare": "Pahami BGP dan route requirements; jangan anggap semua tunnel otomatis saling terhubung.",
+          "lesson": "l086",
+          "group": "Hybrid access",
+          "expansion": ""
+        },
+        {
+          "id": "direct-connect",
+          "name": "Direct Connect",
+          "cue": "Dedicated network path",
+          "use": "Dedicated connectivity ke AWS dengan VIF yang sesuai tujuan.",
+          "compare": "Bukan otomatis end-to-end encryption; rancang encryption dan redundant connections jika dibutuhkan.",
+          "lesson": "l087",
+          "group": "Hybrid access",
+          "expansion": ""
+        },
+        {
+          "id": "route-53",
+          "name": "Route 53",
+          "cue": "DNS decisions · memilih alamat",
+          "use": "Domain/DNS hosting, routing policies dan health-based DNS responses.",
+          "compare": "DNS failover tidak mempromosikan database atau menyalin state aplikasi.",
+          "lesson": "l031",
+          "group": "DNS & discovery",
+          "expansion": ""
+        },
+        {
+          "id": "route-53-resolver",
+          "name": "Route 53 Resolver",
+          "cue": "Hybrid DNS bridge",
+          "use": "Inbound: on-prem bertanya ke AWS. Outbound: AWS meneruskan query ke DNS lain.",
+          "compare": "Arah request DNS menentukan jenis endpoint; jangan terbalik.",
+          "lesson": "l033",
+          "group": "DNS & discovery",
+          "expansion": ""
+        },
+        {
+          "id": "cloud-map",
+          "name": "Cloud Map",
+          "cue": "Service discovery · cari endpoint",
+          "use": "Registry untuk menemukan supported service instances dan attributes.",
+          "compare": "Discovery tidak sama dengan load balancing atau application health recovery.",
+          "lesson": "l070",
+          "group": "DNS & discovery",
+          "expansion": "Service/resource discovery"
+        },
+        {
+          "id": "application-load-balancer-alb",
+          "name": "Application Load Balancer (ALB)",
+          "cue": "HTTP routing · Layer 7",
+          "use": "Host/path routing untuk HTTP(S) applications dan integrations yang didukung.",
+          "compare": "Butuh TCP/UDP pass-through atau static IP per AZ? Evaluasi NLB.",
+          "lesson": "l028",
+          "group": "Load balancing",
+          "expansion": ""
+        },
+        {
+          "id": "network-load-balancer-nlb",
+          "name": "Network Load Balancer (NLB)",
+          "cue": "Transport flows · Layer 4",
+          "use": "Traffic TCP/UDP/TLS dengan flow-based routing dan alamat statis per AZ.",
+          "compare": "Tidak melakukan host/path HTTP routing seperti ALB.",
+          "lesson": "l028",
+          "group": "Load balancing",
+          "expansion": ""
+        },
+        {
+          "id": "gateway-load-balancer-gwlb",
+          "name": "Gateway Load Balancer (GWLB)",
+          "cue": "Fleet of appliances",
+          "use": "Sisipkan dan scale virtual network appliances melalui GENEVE.",
+          "compare": "Traffic inspection appliances berbeda dari routing HTTP ke web servers.",
+          "lesson": "l028",
+          "group": "Load balancing",
+          "expansion": ""
+        },
+        {
+          "id": "cloudfront",
+          "name": "CloudFront",
+          "cue": "Edge cache · dekat pengguna",
+          "use": "Deliver/cache HTTP(S) content melalui edge locations dan origin policies.",
+          "compare": "Global Accelerator tidak melakukan content caching; cache correctness tergantung cache key/TTL.",
+          "lesson": "l042",
+          "group": "Global & edge",
+          "expansion": ""
+        },
+        {
+          "id": "global-accelerator",
+          "name": "Global Accelerator",
+          "cue": "Global static IPs",
+          "use": "Anycast static IPs dan routing AWS global network untuk supported endpoints.",
+          "compare": "Memperbaiki jalur/routing; bukan CDN object cache.",
+          "lesson": "l034",
+          "group": "Global & edge",
+          "expansion": ""
+        },
+        {
+          "id": "cloudfront-functions",
+          "name": "CloudFront Functions",
+          "cue": "Light edge logic",
+          "use": "Manipulasi ringan viewer request/response seperti URL atau headers.",
+          "compare": "Runtime constraints berbeda dari Lambda@Edge; tidak memilih hanya karena sama-sama function.",
+          "lesson": "l044",
+          "group": "Global & edge",
+          "expansion": ""
+        },
+        {
+          "id": "lambda-edge",
+          "name": "Lambda@Edge",
+          "cue": "Richer edge processing",
+          "use": "Jalankan supported request/response logic pada CloudFront event stages.",
+          "compare": "Beda deployment, runtime limits dan trigger scope dari Lambda regional/CloudFront Functions.",
+          "lesson": "l044",
+          "group": "Global & edge",
+          "expansion": ""
+        }
+      ]
+    },
+    {
+      "id": "storage",
+      "title": "Storage & files",
+      "question": "Apakah data berupa object, block, atau file?",
+      "memory": "S3 = object · EBS = disk · EFS = NFS bersama · FSx = filesystem khusus.",
+      "color": "#387e4e",
+      "source": "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/storage-services.html",
+      "services": [
+        {
+          "id": "s3",
+          "name": "S3",
+          "cue": "Object store · bucket + key",
+          "use": "Simpan objects untuk data lake, backup, media atau static assets.",
+          "compare": "Bukan POSIX filesystem atau block disk; access pattern menentukan storage class.",
+          "lesson": "l038",
+          "group": "Objects",
+          "expansion": "Simple Storage Service"
+        },
+        {
+          "id": "s3-glacier-classes",
+          "name": "S3 Glacier classes",
+          "cue": "Archive · jarang diambil",
+          "use": "Arsipkan objects dengan access frequency, retrieval time dan minimum-duration yang sesuai.",
+          "compare": "Glacier Instant, Flexible dan Deep Archive memiliki retrieval characteristics berbeda.",
+          "lesson": "l073",
+          "group": "Objects",
+          "expansion": ""
+        },
+        {
+          "id": "s3-access-points",
+          "name": "S3 access points",
+          "cue": "Separate access doors",
+          "use": "Berikan endpoint dan policy terpisah untuk akses bucket oleh aplikasi/tim.",
+          "compare": "Access point mengatur akses; tidak membuat copy data otomatis.",
+          "lesson": "l018",
+          "group": "Objects",
+          "expansion": ""
+        },
+        {
+          "id": "s3-multi-region-access-points",
+          "name": "S3 Multi-Region Access Points",
+          "cue": "One global S3 entry",
+          "use": "Gunakan global access point untuk supported multi-Region bucket architecture.",
+          "compare": "Routing saja tidak mereplikasi objects; replication harus dikonfigurasi.",
+          "lesson": "l018",
+          "group": "Objects",
+          "expansion": ""
+        },
+        {
+          "id": "s3-object-lambda",
+          "name": "S3 Object Lambda",
+          "cue": "Transform on read",
+          "use": "Pola transform response S3 saat dibaca, misalnya redaction.",
+          "compare": "Ketersediaan untuk customer baru dibatasi; pelajari konsep tanpa mengasumsikan eligibility.",
+          "lesson": "l018",
+          "group": "Objects",
+          "expansion": "",
+          "update": {
+            "tag": "Check eligibility",
+            "note": "Restricted to existing customers and selected partners from November 2025.",
+            "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/transforming-objects.html"
+          }
+        },
+        {
+          "id": "s3-transfer-acceleration",
+          "name": "S3 Transfer Acceleration",
+          "cue": "Faster long-distance upload",
+          "use": "Gunakan edge network path untuk transfer S3 lintas jarak bila hasil pengujian menguntungkan.",
+          "compare": "Berbeda dari CloudFront content delivery; ukur biaya dan benefit pada lokasi nyata.",
+          "lesson": "l039",
+          "group": "Objects",
+          "expansion": ""
+        },
+        {
+          "id": "ebs",
+          "name": "EBS",
+          "cue": "Persistent block disk",
+          "use": "Block volumes untuk EC2 dan supported workloads dalam scope AZ.",
+          "compare": "Berbeda dari shared NFS. Snapshot membantu recovery; volume bukan otomatis multi-AZ.",
+          "lesson": "l036",
+          "group": "Block & shared files",
+          "expansion": "Elastic Block Store"
+        },
+        {
+          "id": "ec2-instance-store",
+          "name": "EC2 instance store",
+          "cue": "Local temporary disk",
+          "use": "Butuh local low-latency scratch, cache atau replicated transient data.",
+          "compare": "Data tidak tahan pada semua lifecycle events; jangan jadikan satu-satunya copy penting.",
+          "lesson": "l036",
+          "group": "Block & shared files",
+          "expansion": ""
+        },
+        {
+          "id": "efs",
+          "name": "EFS",
+          "cue": "Shared Linux NFS",
+          "use": "Banyak supported compute clients mengakses shared filesystem.",
+          "compare": "EFS memakai NFS; Windows SMB/AD requirements sering mengarah ke FSx Windows.",
+          "lesson": "l037",
+          "group": "Block & shared files",
+          "expansion": "Elastic File System"
+        },
+        {
+          "id": "fsx-for-windows-file-server",
+          "name": "FSx for Windows File Server",
+          "cue": "Windows SMB + AD",
+          "use": "Shared Windows file workloads dengan SMB dan Active Directory.",
+          "compare": "Bukan NFS EFS atau HPC Lustre; protocol menjadi decisive constraint.",
+          "lesson": "l040",
+          "group": "FSx family",
+          "expansion": ""
+        },
+        {
+          "id": "fsx-for-lustre",
+          "name": "FSx for Lustre",
+          "cue": "Parallel HPC filesystem",
+          "use": "High-throughput parallel processing seperti HPC/ML dengan data integration yang sesuai.",
+          "compare": "Pilih deployment durability yang cocok; filesystem performance bukan backup strategy.",
+          "lesson": "l040",
+          "group": "FSx family",
+          "expansion": ""
+        },
+        {
+          "id": "fsx-for-netapp-ontap",
+          "name": "FSx for NetApp ONTAP",
+          "cue": "NetApp in AWS",
+          "use": "Butuh ONTAP capabilities, storage efficiencies dan supported file/block protocols.",
+          "compare": "ONTAP semantics berbeda dari sekadar Windows SMB share atau object bucket.",
+          "lesson": "l040",
+          "group": "FSx family",
+          "expansion": ""
+        },
+        {
+          "id": "fsx-for-openzfs",
+          "name": "FSx for OpenZFS",
+          "cue": "ZFS filesystem",
+          "use": "Butuh managed OpenZFS, NFS access dan ZFS snapshot/clone capabilities.",
+          "compare": "Jangan tertukar dengan Lustre parallel HPC atau ONTAP multiprotocol features.",
+          "lesson": "l040",
+          "group": "FSx family",
+          "expansion": ""
+        },
+        {
+          "id": "data-lifecycle-manager",
+          "name": "Data Lifecycle Manager",
+          "cue": "Automate EBS snapshots",
+          "use": "Otomatiskan lifecycle EBS snapshots dan EBS-backed AMIs.",
+          "compare": "AWS Backup mengelola backup lintas supported services dengan kebijakan lebih luas.",
+          "lesson": "l036",
+          "group": "Protection",
+          "expansion": ""
+        },
+        {
+          "id": "aws-backup",
+          "name": "AWS Backup",
+          "cue": "Central backup policy",
+          "use": "Jadwalkan, retain dan govern recovery points lintas supported resources.",
+          "compare": "Backup tidak identik dengan continuous server replication melalui DRS.",
+          "lesson": "l081",
+          "group": "Protection",
+          "expansion": ""
+        }
+      ]
+    },
+    {
+      "id": "database",
+      "title": "Databases & caching",
+      "question": "Bagaimana aplikasi menyimpan dan membaca state?",
+      "memory": "RDS/Aurora = relasional · DynamoDB = key-value · DocumentDB = dokumen · ElastiCache/DAX = cache.",
+      "color": "#7a55a4",
+      "source": "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/database.html",
+      "services": [
+        {
+          "id": "rds",
+          "name": "RDS",
+          "cue": "Managed relational engine",
+          "use": "Relational database dengan engine dan operational features yang didukung.",
+          "compare": "Multi-AZ DB instance standby bukan read replica; Multi-AZ DB clusters memiliki readable standbys.",
+          "lesson": "l048",
+          "group": "Relational",
+          "expansion": "Relational Database Service"
+        },
+        {
+          "id": "rds-proxy",
+          "name": "RDS Proxy",
+          "cue": "Connection pool · hemat koneksi",
+          "use": "Pool/manage koneksi aplikasi ke supported relational databases, termasuk spiky Lambda.",
+          "compare": "Membantu koneksi; tidak menghilangkan semua bottleneck query atau storage.",
+          "lesson": "l048",
+          "group": "Relational",
+          "expansion": "Managed database connection proxy"
+        },
+        {
+          "id": "aurora",
+          "name": "Aurora",
+          "cue": "AWS relational architecture",
+          "use": "MySQL/PostgreSQL-compatible database dengan storage dan compute architecture Aurora.",
+          "compare": "Compatibility bukan berarti semua fitur engine asal tersedia persis sama.",
+          "lesson": "l049",
+          "group": "Relational",
+          "expansion": ""
+        },
+        {
+          "id": "aurora-serverless",
+          "name": "Aurora Serverless",
+          "cue": "Elastic DB compute",
+          "use": "Sesuaikan database compute pada supported Aurora configurations.",
+          "compare": "Pahami versi dan scaling configuration; jangan menghafal perilaku v1 untuk v2.",
+          "lesson": "l050",
+          "group": "Relational",
+          "expansion": ""
+        },
+        {
+          "id": "aurora-global-database",
+          "name": "Aurora Global Database",
+          "cue": "Regional replicas · global reads",
+          "use": "Cross-Region reads dan disaster recovery dengan supported Aurora global setup.",
+          "compare": "Replication lag dan failover procedure tetap menentukan RPO/RTO.",
+          "lesson": "l050",
+          "group": "Relational",
+          "expansion": ""
+        },
+        {
+          "id": "dynamodb",
+          "name": "DynamoDB",
+          "cue": "Key-value at scale",
+          "use": "Predictable key-based access pada managed NoSQL tables.",
+          "compare": "Desain partition/sort keys dari access patterns; tidak memerlukan relational joins.",
+          "lesson": "l046",
+          "group": "NoSQL & search",
+          "expansion": ""
+        },
+        {
+          "id": "dynamodb-streams",
+          "name": "DynamoDB Streams",
+          "cue": "Table changes · jejak perubahan",
+          "use": "Tangkap item-level changes untuk downstream processing.",
+          "compare": "Change stream bukan backup jangka panjang; perhatikan retention dan consumer handling.",
+          "lesson": "l046",
+          "group": "NoSQL & search",
+          "expansion": ""
+        },
+        {
+          "id": "dax",
+          "name": "DAX",
+          "cue": "DynamoDB read cache",
+          "use": "Kurangi latency untuk supported DynamoDB read patterns dengan cache.",
+          "compare": "Tidak mempercepat setiap write atau menyediakan relational caching universal.",
+          "lesson": "l046",
+          "group": "NoSQL & search",
+          "expansion": "DynamoDB Accelerator"
+        },
+        {
+          "id": "documentdb",
+          "name": "DocumentDB",
+          "cue": "MongoDB-compatible documents",
+          "use": "Document workloads memakai supported MongoDB-compatible APIs.",
+          "compare": "Compatibility perlu diuji; jangan menganggap semua MongoDB versions/features didukung.",
+          "lesson": "l060",
+          "group": "NoSQL & search",
+          "expansion": ""
+        },
+        {
+          "id": "opensearch-service",
+          "name": "OpenSearch Service",
+          "cue": "Search & index · cari cepat",
+          "use": "Full-text search, indexing dan log analytics.",
+          "compare": "Bukan pengganti universal transactional database; source-of-truth dan reindex plan tetap dibutuhkan.",
+          "lesson": "l047",
+          "group": "NoSQL & search",
+          "expansion": ""
+        },
+        {
+          "id": "timestream-for-liveanalytics",
+          "name": "Timestream for LiveAnalytics",
+          "cue": "Time-series analytics",
+          "use": "Time-stamped measurements dan analytical queries untuk existing eligible customers.",
+          "compare": "Ditutup untuk customer baru sejak 20 Jun 2025; evaluasi current alternatives untuk proyek baru.",
+          "lesson": "l060",
+          "group": "NoSQL & search",
+          "expansion": "",
+          "update": {
+            "tag": "Existing customers",
+            "note": "New customer access closed on 20 June 2025.",
+            "url": "https://docs.aws.amazon.com/timestream/latest/developerguide/AmazonTimestreamForLiveAnalytics-availability-change.html"
+          }
+        },
+        {
+          "id": "elasticache",
+          "name": "ElastiCache",
+          "cue": "Hot data in memory",
+          "use": "Cache frequent reads, supported sessions atau data structures untuk mengurangi backend load.",
+          "compare": "Redis OSS/Valkey/Memcached capabilities berbeda; cache invalidation dan durability harus dirancang.",
+          "lesson": "l045",
+          "group": "Caching",
+          "expansion": ""
+        }
+      ]
+    },
+    {
+      "id": "integration",
+      "title": "Events & integration",
+      "question": "Apakah perlu antrian, broadcast, atau workflow?",
+      "memory": "SQS = antre · SNS = sebarkan · EventBridge = cocokkan event · Step Functions = urutkan langkah.",
+      "color": "#b05a29",
+      "source": "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/application-integration.html",
+      "services": [
+        {
+          "id": "sqs",
+          "name": "SQS",
+          "cue": "Work queue · satu pekerjaan",
+          "use": "Buffer pekerjaan dan decouple producer dari consumers.",
+          "compare": "Consumers berbagi queue bersaing memproses; bukan setiap consumer mendapat salinan sendiri.",
+          "lesson": "l052",
+          "group": "Messages & events",
+          "expansion": "Simple Queue Service"
+        },
+        {
+          "id": "sns",
+          "name": "SNS",
+          "cue": "Fan-out · satu ke banyak",
+          "use": "Publish event ke subscribers; gabungkan dengan queues untuk independent buffering.",
+          "compare": "Pub/sub berbeda dari work queue; perhatikan topic type, retries dan delivery guarantees.",
+          "lesson": "l054",
+          "group": "Messages & events",
+          "expansion": "Simple Notification Service"
+        },
+        {
+          "id": "eventbridge",
+          "name": "EventBridge",
+          "cue": "Event router · cocokkan pola",
+          "use": "Route events berdasarkan isi, source dan rules ke targets.",
+          "compare": "Bukan workflow state machine; orchestration panjang lebih cocok Step Functions.",
+          "lesson": "l064",
+          "group": "Messages & events",
+          "expansion": ""
+        },
+        {
+          "id": "amazon-mq",
+          "name": "Amazon MQ",
+          "cue": "Keep broker protocols",
+          "use": "Migrasikan aplikasi yang perlu supported ActiveMQ/RabbitMQ compatibility.",
+          "compare": "Pilih karena protocol compatibility; SQS/SNS menawarkan model API berbeda.",
+          "lesson": "l053",
+          "group": "Messages & events",
+          "expansion": ""
+        },
+        {
+          "id": "step-functions",
+          "name": "Step Functions",
+          "cue": "Stateful workflow · alur kerja",
+          "use": "Orkestrasi steps, branches, waits, retry, timeout dan human callback.",
+          "compare": "Standard/Express mempunyai semantics berbeda; side effects tetap butuh idempotency.",
+          "lesson": "l051",
+          "group": "APIs & workflows",
+          "expansion": ""
+        },
+        {
+          "id": "api-gateway",
+          "name": "API Gateway",
+          "cue": "Managed API front door",
+          "use": "Expose REST/HTTP/WebSocket APIs dengan supported auth, throttling dan integrations.",
+          "compare": "API type memengaruhi fitur dan limits. API keys bukan pengganti authentication.",
+          "lesson": "l029",
+          "group": "APIs & workflows",
+          "expansion": ""
+        },
+        {
+          "id": "appsync",
+          "name": "AppSync",
+          "cue": "GraphQL with resolvers",
+          "use": "API GraphQL yang mengambil data dari supported sources dengan resolvers.",
+          "compare": "GraphQL schema/resolvers berbeda dari generic REST proxy.",
+          "lesson": "l030",
+          "group": "APIs & workflows",
+          "expansion": ""
+        }
+      ]
+    },
+    {
+      "id": "analytics",
+      "title": "Data & analytics",
+      "question": "Bagaimana data masuk, diolah, dan dianalisis?",
+      "memory": "Streams = tahan event · Firehose = antar data · Flink = hitung live · Glue = siapkan · Athena = SQL di S3.",
+      "color": "#187f82",
+      "source": "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/analytics.html",
+      "services": [
+        {
+          "id": "kinesis-data-streams",
+          "name": "Kinesis Data Streams",
+          "cue": "Replayable event stream",
+          "use": "Ingest ordered-per-shard records dan izinkan independent consumers/replay.",
+          "compare": "Beda queue: consumer melacak posisi; partition key menentukan distribution/order scope.",
+          "lesson": "l055",
+          "group": "Streaming",
+          "expansion": ""
+        },
+        {
+          "id": "amazon-data-firehose",
+          "name": "Amazon Data Firehose",
+          "cue": "Delivery pipe · antar data",
+          "use": "Buffer, transform sesuai dukungan, lalu deliver ke storage/analytics destinations.",
+          "compare": "Bukan pengganti replayable stream dengan custom independent consumers.",
+          "lesson": "l055",
+          "group": "Streaming",
+          "expansion": ""
+        },
+        {
+          "id": "managed-service-for-apache-flink",
+          "name": "Managed Service for Apache Flink",
+          "cue": "Stateful live processing",
+          "use": "Windows, aggregations dan event-time processing pada streaming data.",
+          "compare": "Mengolah stream; Firehose terutama mengantarkan data.",
+          "lesson": "l055",
+          "group": "Streaming",
+          "expansion": ""
+        },
+        {
+          "id": "amazon-msk",
+          "name": "Amazon MSK",
+          "cue": "Managed Kafka",
+          "use": "Kafka-compatible streaming untuk existing Kafka producers/consumers.",
+          "compare": "Kafka compatibility menjadi alasan; operations dan partition planning tetap relevan.",
+          "lesson": "l056",
+          "group": "Streaming",
+          "expansion": ""
+        },
+        {
+          "id": "emr",
+          "name": "EMR",
+          "cue": "Big-data frameworks",
+          "use": "Jalankan Spark/Hadoop dan supported big-data ecosystem.",
+          "compare": "Lebih banyak framework/control daripada query SQL langsung memakai Athena.",
+          "lesson": "l058",
+          "group": "Prepare & catalog",
+          "expansion": "Elastic MapReduce"
+        },
+        {
+          "id": "aws-glue",
+          "name": "AWS Glue",
+          "cue": "ETL + metadata",
+          "use": "Integrasi data, transformation jobs dan metadata/catalog discovery.",
+          "compare": "Crawler mengidentifikasi metadata; bukan otomatis memperbaiki semua kualitas data.",
+          "lesson": "l058",
+          "group": "Prepare & catalog",
+          "expansion": ""
+        },
+        {
+          "id": "glue-data-catalog",
+          "name": "Glue Data Catalog",
+          "cue": "Schema directory · katalog data",
+          "use": "Bagikan metadata schema, locations dan partitions ke analytics tools.",
+          "compare": "Metadata catalog bukan penyimpanan seluruh data mentah.",
+          "lesson": "l058",
+          "group": "Prepare & catalog",
+          "expansion": ""
+        },
+        {
+          "id": "aws-data-exchange",
+          "name": "AWS Data Exchange",
+          "cue": "Subscribe to datasets",
+          "use": "Temukan dan akses datasets pihak ketiga melalui supported delivery methods.",
+          "compare": "Data subscription berbeda dari memindahkan own files dengan DataSync.",
+          "lesson": "l041",
+          "group": "Prepare & catalog",
+          "expansion": ""
+        },
+        {
+          "id": "athena",
+          "name": "Athena",
+          "cue": "SQL over S3",
+          "use": "Ad-hoc SQL pada supported S3 datasets tanpa mengelola cluster.",
+          "compare": "Partition dan columnar formats memengaruhi data scanned; beda operational transactional DB.",
+          "lesson": "l061",
+          "group": "Query & visualize",
+          "expansion": ""
+        },
+        {
+          "id": "redshift",
+          "name": "Redshift",
+          "cue": "Data warehouse",
+          "use": "Analytical SQL pada warehouse dengan compute/storage model yang sesuai.",
+          "compare": "OLAP analytics berbeda dari OLTP application database seperti RDS.",
+          "lesson": "l059",
+          "group": "Query & visualize",
+          "expansion": ""
+        },
+        {
+          "id": "redshift-spectrum",
+          "name": "Redshift Spectrum",
+          "cue": "Warehouse queries reach S3",
+          "use": "Query supported external S3 data melalui Redshift.",
+          "compare": "Beda Athena: Spectrum terkait Redshift query environment.",
+          "lesson": "l059",
+          "group": "Query & visualize",
+          "expansion": ""
+        },
+        {
+          "id": "quicksight",
+          "name": "QuickSight",
+          "cue": "BI dashboards · tampilkan insight",
+          "use": "Buat dashboards dan business visualizations dengan supported data connections.",
+          "compare": "SPICE menyimpan imported data; refresh dan row-level security perlu konfigurasi.",
+          "lesson": "l061",
+          "group": "Query & visualize",
+          "expansion": ""
+        }
+      ]
+    },
+    {
+      "id": "operations",
+      "title": "Observe & operate",
+      "question": "Siapa mengubah apa, apa yang rusak, dan bagaimana memperbaikinya?",
+      "memory": "CloudTrail = aktivitas · CloudWatch = kesehatan · Config = konfigurasi · X-Ray = perjalanan request.",
+      "color": "#547a32",
+      "source": "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/management-governance.html",
+      "services": [
+        {
+          "id": "cloudtrail",
+          "name": "CloudTrail",
+          "cue": "Who did what? · audit API",
+          "use": "Audit AWS account activity dan supported management/data events.",
+          "compare": "Bukan semua application/SQL logs; event types dan logging scope perlu diaktifkan sesuai kebutuhan.",
+          "lesson": "l012",
+          "group": "Observe",
+          "expansion": "AWS API audit events"
+        },
+        {
+          "id": "cloudwatch",
+          "name": "CloudWatch",
+          "cue": "Metrics + alarms",
+          "use": "Monitor metrics, dashboards, alarms dan operational signals.",
+          "compare": "Metrics/alarm berbeda dari audit identitas pada CloudTrail.",
+          "lesson": "l062",
+          "group": "Observe",
+          "expansion": ""
+        },
+        {
+          "id": "cloudwatch-logs",
+          "name": "CloudWatch Logs",
+          "cue": "Application log desk",
+          "use": "Collect, retain dan query logs; gunakan filters/subscriptions untuk downstream processing.",
+          "compare": "Log retention tidak otomatis unlimited/free; destination permissions tetap penting.",
+          "lesson": "l063",
+          "group": "Observe",
+          "expansion": ""
+        },
+        {
+          "id": "cloudwatch-synthetics",
+          "name": "CloudWatch Synthetics",
+          "cue": "Synthetic visitor · uji dari luar",
+          "use": "Canaries menguji endpoint atau user journey secara berkala.",
+          "compare": "Berbeda dari tracing actual requests yang dilayani aplikasi.",
+          "lesson": "l062",
+          "group": "Observe",
+          "expansion": ""
+        },
+        {
+          "id": "aws-config",
+          "name": "AWS Config",
+          "cue": "Configuration timeline",
+          "use": "Record supported resource configurations dan evaluate compliance rules.",
+          "compare": "Compliance detection tidak otomatis remediation; atur remediation action bila dibutuhkan.",
+          "lesson": "l020",
+          "group": "Observe",
+          "expansion": ""
+        },
+        {
+          "id": "x-ray",
+          "name": "X-Ray",
+          "cue": "Request trace · ikuti perjalanan",
+          "use": "Lacak request lintas instrumented components untuk menemukan latency/errors.",
+          "compare": "Perlu instrumentation/sampling; trace bukan pengganti seluruh metrics dan logs.",
+          "lesson": "l065",
+          "group": "Observe",
+          "expansion": ""
+        },
+        {
+          "id": "aws-health",
+          "name": "AWS Health",
+          "cue": "AWS events affecting you",
+          "use": "Lihat service/account events dan planned changes yang relevan.",
+          "compare": "Berbeda dari aplikasi sendiri down sementara AWS service sehat.",
+          "lesson": "l065",
+          "group": "Operate",
+          "expansion": ""
+        },
+        {
+          "id": "systems-manager",
+          "name": "Systems Manager",
+          "cue": "Fleet operations · kelola mesin",
+          "use": "Manage supported nodes, patches, automation, inventory dan remote operations.",
+          "compare": "Node registration, IAM dan network endpoints tetap diperlukan.",
+          "lesson": "l070",
+          "group": "Operate",
+          "expansion": ""
+        },
+        {
+          "id": "session-manager",
+          "name": "Session Manager",
+          "cue": "Shell without inbound SSH",
+          "use": "Akses supported managed nodes dengan IAM dan SSM connectivity.",
+          "compare": "Tidak berarti otomatis merekam semua port-forwarded/SSH content.",
+          "lesson": "l070",
+          "group": "Operate",
+          "expansion": ""
+        },
+        {
+          "id": "run-command",
+          "name": "Run Command",
+          "cue": "Commands to a fleet",
+          "use": "Jalankan perintah pada targeted managed nodes.",
+          "compare": "Bukan interactive shell; bedakan dari Automation runbooks multi-step.",
+          "lesson": "l070",
+          "group": "Operate",
+          "expansion": ""
+        },
+        {
+          "id": "fault-injection-service-fis",
+          "name": "Fault Injection Service (FIS)",
+          "cue": "Controlled failure · uji ketahanan",
+          "use": "Jalankan eksperimen fault dengan targets, safeguards dan stop conditions.",
+          "compare": "Bukan menjalankan chaos tanpa batas; tetapkan hypothesis dan recovery evidence.",
+          "lesson": "l080",
+          "group": "Operate",
+          "expansion": ""
+        },
+        {
+          "id": "ec2-instance-connect",
+          "name": "EC2 Instance Connect",
+          "cue": "Short-lived SSH key",
+          "use": "Kirim SSH public key sementara untuk supported EC2 connection methods.",
+          "compare": "Key delivery tidak menggantikan network path atau security rules untuk SSH.",
+          "lesson": "l021",
+          "group": "Operate",
+          "expansion": ""
+        }
+      ]
+    },
+    {
+      "id": "devops",
+      "title": "Build & deploy",
+      "question": "Bagaimana perubahan mencapai produksi?",
+      "memory": "Commit = simpan code · Build = test/package · Pipeline = koordinasi · Deploy = rilis · Formation = infrastructure.",
+      "color": "#865177",
+      "source": "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/developer-tools.html",
+      "services": [
+        {
+          "id": "codecommit",
+          "name": "CodeCommit",
+          "cue": "Git source repository",
+          "use": "Simpan source dalam AWS-managed Git repositories.",
+          "compare": "CodeCommit tidak compile atau deploy. Penerimaan customer baru dibuka kembali pada Nov 2025.",
+          "lesson": "l093",
+          "group": "CI/CD stages",
+          "expansion": "",
+          "update": {
+            "tag": "Availability update",
+            "note": "New customer access reopened in November 2025.",
+            "url": "https://docs.aws.amazon.com/codecommit/latest/userguide/history.html"
+          }
+        },
+        {
+          "id": "codebuild",
+          "name": "CodeBuild",
+          "cue": "Build & test · buat artifact",
+          "use": "Compile, test dan package source sesuai build specification.",
+          "compare": "Bukan pipeline coordinator dan bukan layanan tanpa semua timeout/quota.",
+          "lesson": "l093",
+          "group": "CI/CD stages",
+          "expansion": ""
+        },
+        {
+          "id": "codepipeline",
+          "name": "CodePipeline",
+          "cue": "Release conductor · koordinator",
+          "use": "Hubungkan source, build, approval dan deployment stages.",
+          "compare": "Build dilakukan oleh action/service yang terhubung, misalnya CodeBuild.",
+          "lesson": "l093",
+          "group": "CI/CD stages",
+          "expansion": ""
+        },
+        {
+          "id": "codedeploy",
+          "name": "CodeDeploy",
+          "cue": "Application rollout",
+          "use": "Otomatiskan supported rolling, blue/green atau traffic-shifting deployment.",
+          "compare": "Tidak menggantikan provisioning infrastructure dengan CloudFormation.",
+          "lesson": "l067",
+          "group": "CI/CD stages",
+          "expansion": ""
+        },
+        {
+          "id": "cloudformation",
+          "name": "CloudFormation",
+          "cue": "Infrastructure templates",
+          "use": "Declare dan manage resources melalui stacks, updates dan rollback behavior.",
+          "compare": "Drift detection hanya pada supported properties; external changes tetap perlu diatasi.",
+          "lesson": "l068",
+          "group": "Infrastructure & images",
+          "expansion": ""
+        },
+        {
+          "id": "cloudformation-stacksets",
+          "name": "CloudFormation StackSets",
+          "cue": "Stacks across accounts",
+          "use": "Deploy stack instances lintas accounts dan Regions.",
+          "compare": "StackSets mengelola distribution; bukan sharing existing resource seperti RAM.",
+          "lesson": "l068",
+          "group": "Infrastructure & images",
+          "expansion": ""
+        },
+        {
+          "id": "cdk",
+          "name": "CDK",
+          "cue": "Code → infrastructure",
+          "use": "Gunakan programming language untuk define constructs yang synthesize CloudFormation.",
+          "compare": "CDK bukan aplikasi runtime; hasilnya masih mengikuti deployment lifecycle infrastructure.",
+          "lesson": "l069",
+          "group": "Infrastructure & images",
+          "expansion": "Cloud Development Kit"
+        },
+        {
+          "id": "sam",
+          "name": "SAM",
+          "cue": "Serverless templates",
+          "use": "Abstraksi infrastructure dan tooling untuk serverless applications.",
+          "compare": "Dibangun di atas CloudFormation; bukan pengganti Lambda compute engine.",
+          "lesson": "l069",
+          "group": "Infrastructure & images",
+          "expansion": "Serverless Application Model"
+        },
+        {
+          "id": "service-catalog",
+          "name": "Service Catalog",
+          "cue": "Approved products · katalog standar",
+          "use": "Berikan approved infrastructure products dengan governance constraints.",
+          "compare": "Catalog untuk provisioning products berbeda dari marketplace third-party datasets.",
+          "lesson": "l069",
+          "group": "Infrastructure & images",
+          "expansion": ""
+        },
+        {
+          "id": "ec2-image-builder",
+          "name": "EC2 Image Builder",
+          "cue": "Golden image pipeline",
+          "use": "Build, test dan distribute AMIs/container images secara repeatable.",
+          "compare": "Image baru tidak otomatis memperbarui instances yang sudah berjalan; butuh rollout.",
+          "lesson": "l097",
+          "group": "Infrastructure & images",
+          "expansion": ""
+        }
+      ]
+    },
+    {
+      "id": "cost",
+      "title": "Cost & capacity planning",
+      "question": "Bagaimana mengendalikan pemakaian dan biaya?",
+      "memory": "Explorer = analisis · Budgets = batas/alert · CUR = rincian · Optimizer = ukuran · Savings = komitmen.",
+      "color": "#926c20",
+      "source": "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/aws-cost-management.html",
+      "services": [
+        {
+          "id": "cost-explorer",
+          "name": "Cost Explorer",
+          "cue": "Explore the bill",
+          "use": "Analyze historical costs/usage dan forecasts dengan grouping/filtering.",
+          "compare": "Analisis biaya berbeda dari budget alert atau permission untuk menghentikan resource.",
+          "lesson": "l074",
+          "group": "See & control spend",
+          "expansion": ""
+        },
+        {
+          "id": "aws-budgets",
+          "name": "AWS Budgets",
+          "cue": "Budget thresholds · pengingat biaya",
+          "use": "Pantau cost/usage/reservation budgets dan optional actions yang dikonfigurasi.",
+          "compare": "Bukan real-time hard spending cap; data billing dan action timing mempunyai delay.",
+          "lesson": "l074",
+          "group": "See & control spend",
+          "expansion": ""
+        },
+        {
+          "id": "cost-and-usage-report-cur",
+          "name": "Cost and Usage Report (CUR)",
+          "cue": "Detailed billing rows",
+          "use": "Analisis terperinci billing/usage pada report data dan tooling yang sesuai.",
+          "compare": "Lebih granular daripada dashboard; perlu pipeline/query dan pemahaman billing fields.",
+          "lesson": "l071",
+          "group": "See & control spend",
+          "expansion": ""
+        },
+        {
+          "id": "cost-allocation-tags",
+          "name": "Cost allocation tags",
+          "cue": "Label the spend",
+          "use": "Kelompokkan eligible costs berdasarkan activated tags seperti cost center.",
+          "compare": "Tagging resource saja tidak menjamin tag langsung aktif untuk semua billing reports.",
+          "lesson": "l071",
+          "group": "See & control spend",
+          "expansion": ""
+        },
+        {
+          "id": "compute-optimizer",
+          "name": "Compute Optimizer",
+          "cue": "Rightsize · ukuran yang pas",
+          "use": "Gunakan recommendations berbasis utilization untuk supported resources.",
+          "compare": "Recommendation perlu dicek terhadap peak demand, constraints dan performance goals.",
+          "lesson": "l074",
+          "group": "Optimize capacity",
+          "expansion": ""
+        },
+        {
+          "id": "trusted-advisor",
+          "name": "Trusted Advisor",
+          "cue": "Best-practice checks",
+          "use": "Tinjau supported recommendations untuk cost, security, performance dan resilience.",
+          "compare": "Cakupan checks bergantung layanan/support; bukan exhaustive architecture review.",
+          "lesson": "l071",
+          "group": "Optimize capacity",
+          "expansion": ""
+        },
+        {
+          "id": "service-quotas",
+          "name": "Service Quotas",
+          "cue": "Know your limits",
+          "use": "Lihat quotas dan minta increase untuk batas yang adjustable.",
+          "compare": "Hard quota tidak otomatis bisa dinaikkan; scope account/Region/service penting.",
+          "lesson": "l071",
+          "group": "Optimize capacity",
+          "expansion": ""
+        },
+        {
+          "id": "savings-plans",
+          "name": "Savings Plans",
+          "cue": "Commit eligible spend",
+          "use": "Tukar commitment penggunaan per jam dengan discount pada eligible usage.",
+          "compare": "Bukan capacity reservation; flexibility bergantung plan type dan commitment tetap dibayar.",
+          "lesson": "l072",
+          "group": "Purchase models",
+          "expansion": ""
+        },
+        {
+          "id": "reserved-instances",
+          "name": "Reserved Instances",
+          "cue": "Match billing attributes",
+          "use": "Dapatkan billing benefit untuk eligible usage sesuai reservation attributes.",
+          "compare": "Regional vs zonal EC2 reservations berbeda; jangan menganggap semua RI selalu menjamin kapasitas.",
+          "lesson": "l024",
+          "group": "Purchase models",
+          "expansion": ""
+        },
+        {
+          "id": "spot-instances",
+          "name": "Spot Instances",
+          "cue": "Spare capacity · boleh terputus",
+          "use": "Gunakan discounted interruptible EC2 capacity untuk fault-tolerant jobs.",
+          "compare": "Checkpoint dan recovery penting; jangan mengandalkan satu Spot pool untuk critical singleton.",
+          "lesson": "l024",
+          "group": "Purchase models",
+          "expansion": ""
+        }
+      ]
+    },
+    {
+      "id": "migration",
+      "title": "Migration & recovery",
+      "question": "Memindahkan file, database, atau server?",
+      "memory": "DataSync = file online · DMS = database · MGN = pindah server · DRS = pulihkan server · Backup = recovery points.",
+      "color": "#93623b",
+      "source": "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/migration-services.html",
+      "services": [
+        {
+          "id": "datasync",
+          "name": "DataSync",
+          "cue": "Online data transfer",
+          "use": "Transfer files/objects dari supported storage ke AWS atau antarlokasi yang didukung.",
+          "compare": "Bukan database CDC; DMS menangani supported database data migration.",
+          "lesson": "l041",
+          "group": "Transfer data",
+          "expansion": ""
+        },
+        {
+          "id": "transfer-family",
+          "name": "Transfer Family",
+          "cue": "Managed file protocols",
+          "use": "Managed SFTP/FTPS/FTP/AS2 workflows sesuai protocol/endpoints yang didukung.",
+          "compare": "Berbeda dari DataSync agent-driven transfer; pilih berdasarkan client protocol dan workflow.",
+          "lesson": "l041",
+          "group": "Transfer data",
+          "expansion": ""
+        },
+        {
+          "id": "s3-file-gateway",
+          "name": "S3 File Gateway",
+          "cue": "File access → S3 objects",
+          "use": "Expose supported file shares dengan local caching dan object storage di S3.",
+          "compare": "NFS/SMB interface di gateway tidak membuat S3 menjadi native POSIX filesystem.",
+          "lesson": "l076",
+          "group": "Storage Gateway family",
+          "expansion": ""
+        },
+        {
+          "id": "fsx-file-gateway",
+          "name": "FSx File Gateway",
+          "cue": "Cached FSx access",
+          "use": "Pola cached on-premises access ke FSx Windows pada materi lama.",
+          "compare": "Layanan ditutup untuk customer baru; cek lifecycle sebelum memilih untuk desain baru.",
+          "lesson": "l076",
+          "group": "Storage Gateway family",
+          "expansion": "",
+          "update": {
+            "tag": "Existing customers",
+            "note": "FSx File Gateway is no longer open to new customers.",
+            "url": "https://docs.aws.amazon.com/filegateway/latest/filefsxw/what-is-file-fsxw.html"
+          }
+        },
+        {
+          "id": "volume-gateway",
+          "name": "Volume Gateway",
+          "cue": "iSCSI volumes + cloud backup",
+          "use": "Integrasikan block storage on-premises dengan cached/stored volume model.",
+          "compare": "Semantics block volume berbeda dari file shares atau virtual tapes.",
+          "lesson": "l076",
+          "group": "Storage Gateway family",
+          "expansion": ""
+        },
+        {
+          "id": "tape-gateway",
+          "name": "Tape Gateway",
+          "cue": "Virtual tapes · backup lama",
+          "use": "Integrasikan backup software yang kompatibel dengan virtual tape library.",
+          "compare": "Bukan general-purpose file server; gunakan untuk tape-oriented backup workflow.",
+          "lesson": "l076",
+          "group": "Storage Gateway family",
+          "expansion": ""
+        },
+        {
+          "id": "snowball-snow-family",
+          "name": "Snowball / Snow family",
+          "cue": "Ship data · kirim perangkat",
+          "use": "Pola offline bulk transfer atau edge processing saat jaringan tidak memadai.",
+          "compare": "Produk dan eligibility berubah; Snowball Edge dibatasi bagi existing customers sejak Nov 2025.",
+          "lesson": "l077",
+          "group": "Transfer data",
+          "expansion": "",
+          "update": {
+            "tag": "Check eligibility",
+            "note": "Snowball Edge availability is restricted to existing customers.",
+            "url": "https://aws.amazon.com/snowball/faqs/"
+          }
+        },
+        {
+          "id": "database-migration-service-dms",
+          "name": "Database Migration Service (DMS)",
+          "cue": "Database rows + CDC",
+          "use": "Full load dan ongoing change replication untuk supported databases.",
+          "compare": "Tidak otomatis menyelesaikan semua schema/application incompatibility.",
+          "lesson": "l078",
+          "group": "Migrate databases & servers",
+          "expansion": ""
+        },
+        {
+          "id": "schema-conversion-tool-sct",
+          "name": "Schema Conversion Tool (SCT)",
+          "cue": "Translate the schema",
+          "use": "Assess dan convert supported database schema/code antar-engines.",
+          "compare": "Schema conversion berbeda dari memindahkan rows dan ongoing changes.",
+          "lesson": "l078",
+          "group": "Migrate databases & servers",
+          "expansion": ""
+        },
+        {
+          "id": "application-migration-service-mgn",
+          "name": "Application Migration Service (MGN)",
+          "cue": "Rehost servers",
+          "use": "Replicate supported source servers dan cut over workloads ke AWS.",
+          "compare": "Tujuan utamanya migration; DRS mempertahankan recovery capability untuk disaster scenarios.",
+          "lesson": "l080",
+          "group": "Migrate databases & servers",
+          "expansion": "",
+          "update": {
+            "tag": "Renamed",
+            "note": "AWS Application Migration Service is now AWS Transform MGN; the slides retain the earlier name.",
+            "url": "https://docs.aws.amazon.com/mgn/latest/ug/General-Questions-FAQ.html"
+          }
+        },
+        {
+          "id": "elastic-disaster-recovery-drs",
+          "name": "Elastic Disaster Recovery (DRS)",
+          "cue": "Standby server recovery",
+          "use": "Continuous replication dan launch recovery instances saat disaster/drill.",
+          "compare": "Replication bisa ikut menyalin kerusakan logis; tetap rancang backup dan recovery points.",
+          "lesson": "l080",
+          "group": "Migrate databases & servers",
+          "expansion": ""
+        },
+        {
+          "id": "application-discovery-service",
+          "name": "Application Discovery Service",
+          "cue": "Inventory & dependencies",
+          "use": "Kumpulkan informasi source environment untuk migration planning.",
+          "compare": "Discovery memberi evidence; bukan melakukan server cutover sendiri.",
+          "lesson": "l080",
+          "group": "Plan migration",
+          "expansion": ""
+        },
+        {
+          "id": "migration-hub",
+          "name": "Migration Hub",
+          "cue": "Migration tracking",
+          "use": "Track progress dan coordinate supported migration tools/workstreams.",
+          "compare": "Bukan satu engine yang memindahkan semua jenis workload.",
+          "lesson": "l080",
+          "group": "Plan migration",
+          "expansion": ""
+        },
+        {
+          "id": "migration-evaluator",
+          "name": "Migration Evaluator",
+          "cue": "Build the business case",
+          "use": "Estimasi migration economics dari inventory dan utilization evidence.",
+          "compare": "Projected savings bergantung assumptions; bukan guarantee setelah go-live.",
+          "lesson": "l080",
+          "group": "Plan migration",
+          "expansion": ""
+        }
+      ]
+    },
+    {
+      "id": "ai",
+      "title": "AI & machine learning",
+      "question": "Apakah input berupa teks, suara, gambar, atau dokumen?",
+      "memory": "Rekognition = lihat · Transcribe = dengar→teks · Polly = teks→suara · Textract = baca form · Comprehend = makna teks.",
+      "color": "#895caa",
+      "source": "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/machine-learning.html",
+      "services": [
+        {
+          "id": "amazon-bedrock",
+          "name": "Amazon Bedrock",
+          "cue": "Foundation models · GenAI",
+          "use": "Bangun generative AI applications dengan supported models dan managed capabilities.",
+          "compare": "RAG menambah context saat inference; fine-tuning mengubah model behavior melalui training.",
+          "lesson": "l090",
+          "group": "Build models & retrieval",
+          "expansion": ""
+        },
+        {
+          "id": "sagemaker-ai",
+          "name": "SageMaker AI",
+          "cue": "ML development lifecycle",
+          "use": "Build, train dan deploy ML dengan managed tooling dan infrastructure.",
+          "compare": "Untuk custom ML lifecycle; Bedrock berfokus pada penggunaan foundation models dan GenAI capabilities.",
+          "lesson": "l092",
+          "group": "Build models & retrieval",
+          "expansion": ""
+        },
+        {
+          "id": "kendra",
+          "name": "Kendra",
+          "cue": "Enterprise search",
+          "use": "Cari informasi dalam enterprise content melalui supported connectors/search.",
+          "compare": "Search/retrieval bukan otomatis menghasilkan jawaban generatif yang selalu benar.",
+          "lesson": "l092",
+          "group": "Build models & retrieval",
+          "expansion": ""
+        },
+        {
+          "id": "personalize",
+          "name": "Personalize",
+          "cue": "Recommendations · pilihan personal",
+          "use": "Bangun personalized recommendations dari interaction/catalog data yang sesuai.",
+          "compare": "Berbeda dari general text generation atau BI dashboard.",
+          "lesson": "l092",
+          "group": "Build models & retrieval",
+          "expansion": ""
+        },
+        {
+          "id": "rekognition",
+          "name": "Rekognition",
+          "cue": "Images & video · lihat",
+          "use": "Analyze supported visual content, labels atau moderation tasks.",
+          "compare": "OCR structured forms/tables lebih cocok Textract; cek capabilities sesuai use case.",
+          "lesson": "l091",
+          "group": "Images & documents",
+          "expansion": ""
+        },
+        {
+          "id": "textract",
+          "name": "Textract",
+          "cue": "Documents → structured data",
+          "use": "Extract text, forms dan tables dari supported documents.",
+          "compare": "Bukan semantic NLP classifier; Comprehend bekerja pada teks untuk meaning/entity analysis.",
+          "lesson": "l092",
+          "group": "Images & documents",
+          "expansion": ""
+        },
+        {
+          "id": "transcribe",
+          "name": "Transcribe",
+          "cue": "Speech → text",
+          "use": "Ubah audio speech menjadi transcript dengan supported features/languages.",
+          "compare": "Arah kebalikan Polly; transcription tidak sama dengan translation.",
+          "lesson": "l091",
+          "group": "Speech & language",
+          "expansion": ""
+        },
+        {
+          "id": "polly",
+          "name": "Polly",
+          "cue": "Text → speech",
+          "use": "Buat spoken audio dari text dengan voices/SSML yang didukung.",
+          "compare": "Tidak mentranskripsikan rekaman suara; itu tugas Transcribe.",
+          "lesson": "l091",
+          "group": "Speech & language",
+          "expansion": ""
+        },
+        {
+          "id": "translate",
+          "name": "Translate",
+          "cue": "Language → language",
+          "use": "Terjemahkan text antar supported languages.",
+          "compare": "Tidak mengubah audio ke text tanpa transcription step.",
+          "lesson": "l091",
+          "group": "Speech & language",
+          "expansion": ""
+        },
+        {
+          "id": "comprehend",
+          "name": "Comprehend",
+          "cue": "Text → meaning",
+          "use": "Analyze supported entities, sentiment dan NLP signals dari teks.",
+          "compare": "Textract mengekstrak text dari document image; Comprehend menganalisis text.",
+          "lesson": "l091",
+          "group": "Speech & language",
+          "expansion": ""
+        },
+        {
+          "id": "comprehend-medical",
+          "name": "Comprehend Medical",
+          "cue": "Clinical text entities",
+          "use": "Extract supported medical information dari clinical text.",
+          "compare": "Domain/language support terbatas dan hasil perlu validasi; bukan diagnosis otomatis.",
+          "lesson": "l091",
+          "group": "Speech & language",
+          "expansion": ""
+        },
+        {
+          "id": "lex",
+          "name": "Lex",
+          "cue": "Conversational interface",
+          "use": "Bangun voice/text bot dengan intents dan conversational flows.",
+          "compare": "Lex menangani interaction; Connect menyediakan contact-center experience.",
+          "lesson": "l091",
+          "group": "Speech & language",
+          "expansion": ""
+        }
+      ]
+    },
+    {
+      "id": "workplace",
+      "title": "Users, devices & media",
+      "question": "Bagaimana layanan mencapai orang dan perangkat?",
+      "memory": "WorkSpaces = desktop · AppStream = aplikasi · Device Farm = uji device · IoT Core = pesan device · SES = email.",
+      "color": "#4d7287",
+      "source": "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/end-user-computing.html",
+      "services": [
+        {
+          "id": "amazon-connect",
+          "name": "Amazon Connect",
+          "cue": "Cloud contact center",
+          "use": "Rancang customer contact flows dan agent/customer interactions.",
+          "compare": "Lex adalah conversational bot; Connect menghubungkan pengalaman contact center yang lebih luas.",
+          "lesson": "l094",
+          "group": "People & communication",
+          "expansion": ""
+        },
+        {
+          "id": "amazon-ses",
+          "name": "Amazon SES",
+          "cue": "Application email",
+          "use": "Kirim transactional/bulk email dengan identity, reputation dan feedback handling.",
+          "compare": "Email delivery berbeda dari SNS event fan-out atau campaign journey orchestration.",
+          "lesson": "l096",
+          "group": "People & communication",
+          "expansion": ""
+        },
+        {
+          "id": "amazon-pinpoint",
+          "name": "Amazon Pinpoint",
+          "cue": "Audience campaigns",
+          "use": "Kenali pola segments, campaigns dan journeys yang dibahas slide lama.",
+          "compare": "AWS mengakhiri support 30 Oct 2026; cek migration guidance dan AWS End User Messaging.",
+          "lesson": "l096",
+          "group": "People & communication",
+          "expansion": "",
+          "update": {
+            "tag": "Lifecycle change",
+            "note": "Support ends 30 October 2026. Messaging channel APIs continue under AWS End User Messaging.",
+            "url": "https://docs.aws.amazon.com/pinpoint/latest/archguide/welcome.html"
+          }
+        },
+        {
+          "id": "workspaces",
+          "name": "WorkSpaces",
+          "cue": "Managed desktops",
+          "use": "Berikan virtual desktop experience bagi workforce dengan supported options.",
+          "compare": "Berbeda dari streaming satu aplikasi; persistence dan DR bergantung deployment.",
+          "lesson": "l095",
+          "group": "Desktop & testing",
+          "expansion": ""
+        },
+        {
+          "id": "appstream-2-0-workspaces-applications",
+          "name": "AppStream 2.0 / WorkSpaces Applications",
+          "cue": "Stream applications",
+          "use": "Berikan remote application/non-persistent desktop access melalui supported clients.",
+          "compare": "AppStream 2.0 kini bernama WorkSpaces Applications; bedakan dari persistent desktop requirement.",
+          "lesson": "l095",
+          "group": "Desktop & testing",
+          "expansion": "",
+          "update": {
+            "tag": "Renamed",
+            "note": "AppStream 2.0 is now Amazon WorkSpaces Applications.",
+            "url": "https://aws.amazon.com/workspaces/applications/"
+          }
+        },
+        {
+          "id": "device-farm",
+          "name": "Device Farm",
+          "cue": "Test on devices",
+          "use": "Uji mobile/web applications pada supported real devices dan browsers.",
+          "compare": "Testing platform, bukan virtual desktop untuk karyawan.",
+          "lesson": "l095",
+          "group": "Desktop & testing",
+          "expansion": ""
+        },
+        {
+          "id": "iot-core",
+          "name": "IoT Core",
+          "cue": "Device message hub",
+          "use": "Authenticate/connect devices dan route messages melalui pub/sub serta rules.",
+          "compare": "Offline buffering, downstream failures dan device lifecycle tetap perlu didesain.",
+          "lesson": "l097",
+          "group": "Devices & media",
+          "expansion": ""
+        },
+        {
+          "id": "kinesis-video-streams",
+          "name": "Kinesis Video Streams",
+          "cue": "Camera video pipeline",
+          "use": "Ingest/store supported video streams untuk playback atau processing.",
+          "compare": "Raw video berbeda dari small structured events di Kinesis Data Streams.",
+          "lesson": "l094",
+          "group": "Devices & media",
+          "expansion": ""
+        }
+      ]
+    }
+  ]
+}

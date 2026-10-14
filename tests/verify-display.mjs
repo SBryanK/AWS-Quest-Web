@@ -1,0 +1,22 @@
+import fs from 'node:fs';import vm from 'node:vm';import assert from 'node:assert/strict';
+const dir=new URL('../dist/',import.meta.url).pathname;
+const feedback=await import('data:text/javascript;base64,'+fs.readFileSync(dir+'feedback.js').toString('base64'));
+let time=0,pulses=[],reduced=false;
+const h=feedback.createHaptics({navigator:{vibrate:n=>{pulses.push(n);return true;}},lowMotion:()=>reduced,now:()=>time});
+assert.equal(h.pulse(),false);h.setEnabled(true);assert.equal(h.pulse(),true);assert.equal(h.pulse(),false);time=100;reduced=true;assert.equal(h.pulse(),false);reduced=false;assert.equal(h.pulse(100),true);assert.equal(pulses.at(-1),20);h.setEnabled(false);assert.equal(pulses.at(-1),0);assert.equal(h.pulse(),false);
+assert.equal(feedback.createHaptics({navigator:{}}).supported,false);
+const failed=feedback.createHaptics({navigator:{vibrate(){throw Error('no')}}});failed.setEnabled(true);assert.equal(failed.pulse(),false);
+const nodes=new Map(),handlers={};
+function node(id){if(!nodes.has(id)){const classes=new Set();nodes.set(id,{value:'',textContent:'',dataset:{},attrs:{},listeners:{},checked:false,disabled:false,open:false,classList:{toggle(k,on){const v=on===undefined?!classes.has(k):on;v?classes.add(k):classes.delete(k);return v;},remove:k=>classes.delete(k),contains:k=>classes.has(k)},setAttribute(k,v){this.attrs[k]=v},getAttribute(k){return this.attrs[k]},addEventListener(k,f){this.listeners[k]=f},querySelector(s){return node(id+' '+s)},focus(){this.focused=true},contains(){return false}});}return nodes.get(id);}
+const saved=new Map([['architect-quest-v1','{"notes":{"l002":"preserve me"},"read":["l002"]}']]);
+const mm={matches:false,addEventListener(k,f){this.listener=f}};
+const context={console,URLSearchParams,Date,createHaptics:feedback.createHaptics,navigator:{},location:{search:'',hash:'#learn/l002'},localStorage:{getItem:k=>saved.get(k)||null,setItem:(k,v)=>saved.set(k,v)},document:{documentElement:{dataset:{}},body:node('body'),querySelector:node,addEventListener(k,f){handlers[k]=f;}},matchMedia:()=>mm};
+vm.createContext(context);const src=fs.readFileSync(dir+'ui.js','utf8').replace(/^import .*;\n/gm,'').replace(/export /g,'');vm.runInContext(src,context);vm.runInContext('initUI();syncUI()',context);
+assert.equal(context.document.body.dataset.view,'learn');assert.equal(node('#haptics').disabled,true);
+node('#focus-toggle').listeners.click();assert.equal(context.document.body.classList.contains('focus-mode'),true);assert.equal(node('#focus-toggle').attrs['aria-pressed'],'true');assert.equal(saved.get('architect-quest-v1'),'{"notes":{"l002":"preserve me"},"read":["l002"]}');
+node('#low-motion').listeners.change({target:{checked:true}});assert.equal(context.document.documentElement.dataset.lowMotion,'true');
+node('#nav-toggle').listeners.click();assert(context.document.body.classList.contains('nav-open'));handlers.keydown({key:'Escape'});assert(!context.document.body.classList.contains('nav-open'));assert(node('#nav-toggle').focused);
+node('#preferences').open=true;handlers.keydown({key:'Escape'});assert.equal(node('#preferences').open,false);
+mm.matches=true;mm.listener();assert.equal(node('#low-motion').checked,true);assert.equal(node('#low-motion').disabled,true);
+assert.equal(saved.get('architect-quest-v1'),'{"notes":{"l002":"preserve me"},"read":["l002"]}');
+console.log('PASS: opt-in/rate-limited haptics, reduced motion, unsupported/throwing vibration, focus preference, mobile navigation/Escape, and unchanged study storage.');

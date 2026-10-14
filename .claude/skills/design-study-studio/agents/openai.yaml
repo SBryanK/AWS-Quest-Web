@@ -1,0 +1,14 @@
+interface:
+  display_name: Design & Study Studio
+  short_description: Design apps, study experiences and slide decks
+  default_prompt: Use $design-study-studio to reconcile the design and build a source-grounded
+    learning experience.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

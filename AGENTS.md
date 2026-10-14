@@ -1,0 +1,11 @@
+# Shared working rules
+- Read STATE.md and PROJECT.md; DESIGN.md records visual decisions.
+- Serve dist over HTTP; vanilla HTML/CSS/JS and JSON need no npm install or build.
+- dist is the shipping artifact. Python generators are optional; JSON may contain later edits. Regenerate only relevant data and review diffs.
+- Preserve hash routes, lesson/service IDs, notes, progress export/import, architect-quest-v1 learning storage and architect-quest-display-v1 preferences. Migrate intentional schema changes safely.
+- Preserve bilingual teaching, rationale for each answer, recall and source references.
+- Never commit source PDF, slide images, extracted slide text, private runtime data, secrets or user progress exports.
+- Verify volatile cloud claims against official AWS documentation and record the actual date. Existing reference dates are historical.
+- Run node tests/verify-display.mjs and node tests/verify-mindmap.mjs after relevant edits. Mocked DOM checks are not browser visual QA.
+- Keep requested changes scoped and update STATE.md. Do not remove content simply to simplify design.
+- GitHub commits do not automatically deploy the existing ChatGPT Site. Publishing or paid resources require an applicable user instruction.
