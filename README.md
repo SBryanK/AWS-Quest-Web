@@ -39,3 +39,5 @@ Claude: open this repository and read CLAUDE.md. Two project-local skills are in
 Optional authoring utilities: python3 build_content.py, build_questions.py, build_reference.py, build_updates.py, build_mindmap.py. Run only the relevant script and review JSON diffs; checked-in dist is ready to serve.
 
 GitHub commits do not automatically update the existing ChatGPT Site. Export/import progress when changing browser origins. Hosting identity and original slides are excluded.
+
+The [visual library](https://sbryank.github.io/AWS-Quest-Web/#media) adds service icons, twelve AWS sample diagrams, four optional AWS videos, and six guided diagrams. Related media is also available within lessons. See [asset sources](ASSET-SOURCES.md) and run `node tests/verify-media.mjs` when changing media. To adapt this study experience to another slide deck, use the [reusable Claude/AI prompt](prompts/slide-ke-artifact.md).

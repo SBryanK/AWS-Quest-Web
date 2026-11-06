@@ -37,3 +37,5 @@ Controls use 12px radii, most cards 18–20px, larger desk surfaces 22–26px. P
 JavaScript syntax, local imports/assets, 176 map entries and 14 branches, all 101 lesson renders/links, search and recall structure, local PDF bounds/selection/replacement, and preference/haptics logic were checked. The display tests verify that study storage is unchanged. Browser visual, actual device vibration, zoom and printed output are not verified: the supported browser-control capability is unavailable in this environment.
 
 Keep the site public, as explicitly requested. Do not reintroduce hosted copies of the source slide deck.
+
+Visual supplements (2026-11-05): the existing desk, reading order and tools stay primary. Lessons show service icons and their most relevant example after the mechanism. Further examples expand on request. The media gallery and interactive walkthroughs are optional destinations. Recall hides service icons alongside their names. Full-size originals and descriptive alt text make the diagrams usable beyond their thumbnail size.

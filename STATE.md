@@ -1,13 +1,10 @@
 # Current state
-Updated 2026-10-14.
 
-Prepared latest saved study-desk version for GitHub, with public application files, portable generator paths, regression tests, Claude/Codex entry points and two project-local skills. Hosting identity and private source material excluded.
+Updated 2026-11-05. The GitHub Pages version retains the Study Desk and adds optional visual study resources. No content JSON, learning storage keys or preference schemas changed. The original PDF and user notes are not included.
 
-Validation: both included Node regression checks passed on 2026-10-14: display preferences/haptics/progress preservation, 176 map entries, 14 categories, 101 lesson renders, search, recall and local PDF behavior. Browser visual QA and actual device vibration remain unverified. Cloud facts have not been freshly audited during transfer.
+- Every service/feature on the map has a visual. The atlas distinguishes exact AWS service/resource icons, family marks, and original concept illustrations. Recall mode keeps icons behind the reveal.
+- Visual library (`#media`): twelve sourced architecture images, four optional AWS videos, an illustrated atlas and six interactive teaching diagrams. Lessons select the most relevant sample first; remaining material is optional.
+- See ASSET-SOURCES.md for provenance. The reusable prompt for other decks is in prompts/slide-ke-artifact.md.
+- Serve dist over HTTP. The Pages workflow in .github/workflows/static.yml publishes dist/index.html on pushes to main. The original ChatGPT Site is separate.
 
-Next actions:
-1. Run locally and perform desktop/mobile visual and keyboard QA.
-2. Implement a focused improvement using relevant source files; preserve study progress.
-3. Update state with changes and actual test results.
-
-GitHub Pages now deploys automatically from main through .github/workflows/static.yml. On 2026-10-14 its upload path was corrected from repository root to ./dist so dist/index.html becomes the published entry point. Deployment status must be checked in Actions. The existing ChatGPT Site remains independent. Original deck and user notes are not included.
+Checks on 2026-11-05: verify-display.mjs, verify-mindmap.mjs and verify-media.mjs cover stored preferences and progress compatibility, all 101 lesson renders, 176 map entries, media references and video activation. Mocked checks do not establish external video playback or real device haptics. Future editors should verify context and upstream availability when replacing an example.

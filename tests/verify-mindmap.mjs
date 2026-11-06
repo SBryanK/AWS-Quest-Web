@@ -4,7 +4,8 @@ import vm from 'node:vm';
 const dir=new URL('../dist/',import.meta.url).pathname;
 const read=name=>JSON.parse(fs.readFileSync(dir+name+'.json','utf8'));
 const M=read('mindmap'),C=read('course'),R=read('reference'),G=read('glossary'),Q=read('questions');
-const map=await import('data:text/javascript;base64,'+fs.readFileSync(dir+'mindmap.js').toString('base64'));
+const map=await import(new URL('../dist/mindmap.js',import.meta.url));
+const {lessonVisuals,iconHTML}=await import('../dist/service-visuals.mjs');
 const entries=M.categories.flatMap(c=>c.services),ids=new Set(entries.map(s=>s.id)),lessons=new Set(C.lessons.map(l=>l.id));
 assert.equal(M.categories.length,14);assert.equal(entries.length,176);assert.equal(ids.size,entries.length);
 for(const s of entries){assert(lessons.has(s.lesson),s.name+' missing lesson');for(const k of ['name','cue','use','compare','group'])assert(s[k]?.length,s.name+' '+k);}
@@ -17,7 +18,7 @@ assert(map.branchHTML(M,C.lessons,'all','<script>',false).includes('&lt;script&g
 for(const s of entries){const h=map.serviceCard(s,C.lessons.find(l=>l.id===s.lesson),true);assert(h.includes('<summary>Reveal service & reasoning</summary>'));assert(!h.includes('<details class="service-detail" open'));}
 assert.equal((map.mapSVG(M,'identity').match(/data-category=/g)||[]).length,14);
 const elements=new Map();const el=id=>{if(!elements.has(id))elements.set(id,{innerHTML:'',textContent:'',value:'',classList:{toggle(){},add(){},remove(){}},setAttribute(){},removeAttribute(){},querySelectorAll(){return[]},focus(){},scrollIntoView(){},addEventListener(){}});return elements.get(id);};
-const revoked=[];const sandbox={console,localStorage:{getItem:()=>null,setItem(){}},document:{querySelector:el,querySelectorAll:()=>[],documentElement:{style:{setProperty(){}}}},window:{addEventListener(){},scrollTo(){}},location:{hash:''},URL:{createObjectURL:()=> 'blob:test',revokeObjectURL:u=>revoked.push(u)},setTimeout:()=>0,clearTimeout(){},setInterval:()=>0,M,C,R,G,Q};
+const revoked=[];const sandbox={console,lessonVisuals,iconHTML,localStorage:{getItem:()=>null,setItem(){}},document:{querySelector:el,querySelectorAll:()=>[],documentElement:{style:{setProperty(){}}}},window:{addEventListener(){},scrollTo(){}},location:{hash:''},URL:{createObjectURL:()=> 'blob:test',revokeObjectURL:u=>revoked.push(u)},setTimeout:()=>0,clearTimeout(){},setInterval:()=>0,M,C,R,G,Q};
 vm.createContext(sandbox);
 let app=fs.readFileSync(dir+'app.js','utf8').replace(/^import .*;\n/gm,'').replace(/\ninit\(\);?\s*$/,'');
 assert(!/\ninit\(\)/.test(app));
