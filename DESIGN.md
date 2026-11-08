@@ -39,3 +39,5 @@ JavaScript syntax, local imports/assets, 176 map entries and 14 branches, all 10
 Keep the site public, as explicitly requested. Do not reintroduce hosted copies of the source slide deck.
 
 Visual supplements (2026-11-05): the existing desk, reading order and tools stay primary. Lessons show service icons and their most relevant example after the mechanism. Further examples expand on request. The media gallery and interactive walkthroughs are optional destinations. Recall hides service icons alongside their names. Full-size originals and descriptive alt text make the diagrams usable beyond their thumbnail size.
+
+Video expansion (2026-11-08): preserve the visual library and add a dedicated `#videos` browser with text search, category and service selection, twelve results at a time, lesson links and clear related-topic labels. YouTube embeds remain click-to-load. Existing learning state and display preferences are unchanged.

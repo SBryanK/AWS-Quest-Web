@@ -41,3 +41,5 @@ Optional authoring utilities: python3 build_content.py, build_questions.py, buil
 GitHub commits do not automatically update the existing ChatGPT Site. Export/import progress when changing browser origins. Hosting identity and original slides are excluded.
 
 The [visual library](https://sbryank.github.io/AWS-Quest-Web/#media) adds service icons, twelve AWS sample diagrams, four optional AWS videos, and six guided diagrams. Related media is also available within lessons. See [asset sources](ASSET-SOURCES.md) and run `node tests/verify-media.mjs` when changing media. To adapt this study experience to another slide deck, use the [reusable Claude/AI prompt](prompts/slide-ke-artifact.md).
+
+Production Vercel deployment: https://aws-architect-quest.vercel.app/ . Its `vercel.json` publishes `dist/` without a build. The original https://architect-quest-aws-pro.sbryank.chatgpt.site/ is maintained through the separate Sites source repository. The video catalog is at `#videos`; append a service ID such as `#videos/lambda`. Progress is origin-local: use My notes → export/import to move your saved learning data between hosts.

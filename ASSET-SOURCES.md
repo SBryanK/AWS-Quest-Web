@@ -4,3 +4,7 @@
 - The twelve diagrams in `dist/assets/patterns/` come from [AWS Samples / Serverless Patterns](https://github.com/aws-samples/serverless-patterns). Each entry in `dist/pattern-data.mjs` includes its original image URL and the upstream example directory. The site's source links lead to the example with its context. The upstream license is preserved in that asset directory.
 - Videos are hosted on the Amazon Web Services YouTube channel. `dist/study-media.mjs` records the video IDs and page titles. The site makes no YouTube request before a learner clicks the player; a direct watch link is available. Videos illustrate mechanisms, not current console steps or quotas.
 - Interactive diagrams and Indonesian study questions are authored for this project. A documentation link on each walkthrough gives its scope. The gallery contains no screenshots from the course deck.
+
+## Expanded video catalog (2026-11-08)
+
+`dist/video-catalog.mjs` records the verified YouTube ID, title, publisher, source URL, review date, and service mappings. `services` identifies the main subject; `relatedServices` identifies supporting coverage without claiming a dedicated tutorial. Availability and embedding permission remain controlled by YouTube. The catalog search includes all 176 existing course service/features, not every product in the AWS portfolio. A service with no reviewed video displays that gap and an explicitly unreviewed YouTube search link.

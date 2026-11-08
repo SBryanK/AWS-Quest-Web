@@ -1,10 +1,9 @@
 # Current state
 
-Updated 2026-11-05. The GitHub Pages version retains the Study Desk and adds optional visual study resources. No content JSON, learning storage keys or preference schemas changed. The original PDF and user notes are not included.
+Updated 2026-11-08. Preserved Study Desk and storage keys. Added searchable #videos with all 176 service/feature selectors, 94 sourced videos, 100 direct topic mappings and 56 related topic mappings. Uncovered selections explicitly say no reviewed video and provide a labelled YouTube search.
 
-- Every service/feature on the map has a visual. The atlas distinguishes exact AWS service/resource icons, family marks, and original concept illustrations. Recall mode keeps icons behind the reveal.
-- Visual library (`#media`): twelve sourced architecture images, four optional AWS videos, an illustrated atlas and six interactive teaching diagrams. Lessons select the most relevant sample first; remaining material is optional.
-- See ASSET-SOURCES.md for provenance. The reusable prompt for other decks is in prompts/slide-ke-artifact.md.
-- Serve dist over HTTP. The Pages workflow in .github/workflows/static.yml publishes dist/index.html on pushes to main. The original ChatGPT Site is separate.
+Current gaps: cognito-user-pools, cognito-identity-pools, application-load-balancer-alb, network-load-balancer-nlb, gateway-load-balancer-gwlb, cloudfront-functions, lambda-edge, s3-transfer-acceleration, rds, rds-proxy, sns, api-gateway, cloudwatch-synthetics, ec2-instance-connect, cost-and-usage-report-cur, cost-allocation-tags, service-quotas, spot-instances, datasync, snowball-snow-family, transcribe, amazon-ses, amazon-pinpoint, workspaces, appstream-2-0-workspaces-applications.
 
-Checks on 2026-11-05: verify-display.mjs, verify-mindmap.mjs and verify-media.mjs cover stored preferences and progress compatibility, all 101 lesson renders, 176 map entries, media references and video activation. Mocked checks do not establish external video playback or real device haptics. Future editors should verify context and upstream availability when replacing an example.
+GitHub Pages publishes dist. Vercel project aws-architect-quest uses vercel.json. The original ChatGPT Site has a separate source repository; copy reviewed dist and publish via Sites. Preserve .openai/hosting.json there.
+
+Tests: verify-display.mjs, verify-mindmap.mjs, verify-media.mjs. Browser storage is origin-local; use My notes export/import when moving hosts. External video playback is not guaranteed.
